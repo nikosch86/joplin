@@ -306,9 +306,12 @@ if [ "$IS_DESKTOP_RELEASE" == "1" ]; then
 		# We work around this by aliasing python.
 		alias python=$(which python3)
 		USE_HARD_LINKS=false yarn dist
+	elif [ "$RUNNER_ARCH" == "ARM64" ]; then
+		# electron-builder's bundled fpm is x86-only, use system fpm on arm64
+		USE_HARD_LINKS=false USE_SYSTEM_FPM=true yarn dist
 	else
 		USE_HARD_LINKS=false yarn dist
-	fi	
+	fi
 elif [[ $IS_LINUX = 1 ]] && [ "$IS_SERVER_RELEASE" == "1" ]; then
 	echo "Step: Building Joplin Server Docker Image..."
 	cd "$ROOT_DIR"
@@ -331,6 +334,9 @@ else
 		npm pkg set 'build.mac.identity'=null --json
 		
 		USE_HARD_LINKS=false yarn dist --publish=never
+	elif [ "$RUNNER_ARCH" == "ARM64" ]; then
+		# electron-builder's bundled fpm is x86-only, use system fpm on arm64
+		USE_HARD_LINKS=false USE_SYSTEM_FPM=true yarn dist --publish=never
 	else
 		USE_HARD_LINKS=false yarn dist --publish=never
 	fi

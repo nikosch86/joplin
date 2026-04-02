@@ -39,6 +39,10 @@ runs:
         # Provides a virtual display on Linux. Used for Playwright integration
         # testing.
         sudo apt-get install -y xvfb
+        # ruby and fpm are needed to build .deb packages on arm64, where
+        # electron-builder's bundled fpm (x86-only) cannot run.
+        sudo apt-get install -y ruby ruby-dev
+        sudo gem install fpm
 
     - name: Install macOs dependencies
       if: runner.os == 'macOS'
