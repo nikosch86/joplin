@@ -54,10 +54,8 @@ if [ "$IS_SERVER_RELEASE" = 0 ] && [ "$IS_DESKTOP_RELEASE" = 0 ] && [ "$IS_TRANS
 fi
 
 if [ "$RUNNER_ARCH" == "ARM64" ]; then
-	if [ "$IS_SERVER_RELEASE" == "0" ] && [ "$IS_TRANSCRIBE_RELEASE" == "0" ]; then
-		# We exit now because nothing works properly with the ARM64 architecture.
-		# We only proceed  if building the server image.
-		echo "Running on ARM64 and not trying to build server image - early exit"
+	if [ "$IS_SERVER_RELEASE" == "0" ] && [ "$IS_TRANSCRIBE_RELEASE" == "0" ] && [ "$IS_DESKTOP_RELEASE" == "0" ]; then
+		echo "Running on ARM64 and not trying to build server/desktop image - early exit"
 		exit 0
 	fi
 fi
@@ -72,7 +70,6 @@ if [ "$RUNNER_ARCH" == "ARM64" ]; then
 	DOCKER_IMAGE_PLATFORM="linux/arm64"
 
 	# Delete certain directories because `yarn install` will fail on ARM64.
-	rm -rf app-desktop
 	rm -rf app-mobile
 fi
 
