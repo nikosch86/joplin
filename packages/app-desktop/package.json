@@ -146,7 +146,7 @@
       ],
       "executableName": "joplin",
       "maintainer": "Joplin Team <no-reply@joplinapp.org>",
-      "artifactName": "Joplin-${version}.${ext}"
+      "artifactName": "Joplin-${version}-${arch}.${ext}"
     },
     "toolsets": {
       "appimage": "1.0.3"
