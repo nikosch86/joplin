@@ -39,7 +39,12 @@ runs:
           libsecret-1-dev \
           translate-toolkit \
           rsync \
-          xvfb
+          xvfb \
+          ruby \
+          ruby-dev
+        # fpm is needed to build .deb packages on arm64, where
+        # electron-builder's bundled fpm (x86-only) cannot run.
+        retry 5 15 sudo gem install fpm
 
     - name: Install macOs dependencies
       if: runner.os == 'macOS'

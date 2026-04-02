@@ -69,6 +69,9 @@ if [ "$RUNNER_ARCH" == "ARM64" ]; then
 
 	DOCKER_IMAGE_PLATFORM="linux/arm64"
 
+	# electron-builder's bundled fpm is x86-only, use system fpm on arm64
+	export USE_SYSTEM_FPM=true
+
 	# Delete certain directories because `yarn install` will fail on ARM64.
 	rm -rf app-mobile
 fi
